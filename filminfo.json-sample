@@ -1,0 +1,15 @@
+
+{
+  "API_KEY": {
+    "_comment": "To get an API key, register for free on themoviedb.org, then request the key under Settings/API.",
+    "tmdb_API_key": "Copy the key here."
+  },
+
+  "DIRECTORY": {
+    "videos": "The path to the directory containing the video files and directories."
+  },
+
+  "LANGUAGE": {
+    "lang": "hu"
+  }
+}
