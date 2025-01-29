@@ -1,0 +1,93 @@
+# FILMINFO
+# Copyright (C) 2025
+# This file is distributed under the same license as the filminfo package.
+# Batori Peter <batori.peter@gmail.com>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: Batori Peter <batori.peter@gmail.com>\n"
+"POT-Creation-Date: 2025-01-29 13:33+0100\n"
+"PO-Revision-Date: 2025-01-29 13:33+0100\n"
+"Last-Translator: Batori Peter<batori.peter@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: filminfo_html.py:40
+msgid "image downloaded successfully."
+msgstr "image downloaded successfully."
+
+#: filminfo_html.py:42
+msgid "image download failed."
+msgstr "image download failed."
+
+#: filminfo_html.py:122
+msgid "ERROR"
+msgstr "ERROR"
+
+#: filminfo_html.py:173
+msgid "Movie"
+msgstr "Movie"
+
+#: filminfo_html.py:199
+msgid "Title"
+msgstr "Title"
+
+#: filminfo_html.py:199 filminfo_html.py:253
+msgid "Overview"
+msgstr "Overview"
+
+#: filminfo_html.py:199 filminfo_html.py:253
+msgid "Cast"
+msgstr "Cast"
+
+#: filminfo_html.py:200
+msgid "Original title"
+msgstr "Original title"
+
+#: filminfo_html.py:201 filminfo_html.py:255
+msgid "Genres"
+msgstr "Genres"
+
+#: filminfo_html.py:202 filminfo_html.py:256
+msgid "Vote"
+msgstr "Vote"
+
+#: filminfo_html.py:203
+msgid "Release date"
+msgstr "Release date"
+
+#: filminfo_html.py:204
+msgid "Runtime"
+msgstr "Runtime"
+
+#: filminfo_html.py:212
+msgid "minutes"
+msgstr "minutes"
+
+#: filminfo_html.py:226
+msgid "TV"
+msgstr "TV"
+
+#: filminfo_html.py:253
+msgid "Name"
+msgstr "Name"
+
+#: filminfo_html.py:254
+msgid "Original name"
+msgstr "Original name"
+
+#: filminfo_html.py:257
+msgid "Air dates"
+msgstr "Air dates"
+
+#: filminfo_html.py:258
+msgid "Seasons/Episodes"
+msgstr "Seasons/Episodes"
+
+#: filminfo_html.py:280
+msgid "Unknown"
+msgstr "Unknown"

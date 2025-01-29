@@ -1,15 +1,15 @@
 
 {
-  "API_KEY": {
-    "_comment": "To get an API key, register for free on themoviedb.org, then request the key under Settings/API.",
-    "tmdb_API_key": "Copy the key here."
-  },
+  "_comment": "To get an API key, register for free on themoviedb.org, then request the key under Settings/API.",
+  "tmdb_API_key": "Copy the key here.",
 
-  "DIRECTORY": {
-    "videos": "The path to the directory containing the video files and directories."
-  },
+  "film_dir": "The path to the directory containing the film files and directories.",
 
-  "LANGUAGE": {
-    "lang": "hu"
-  }
+  "lang": "hu",
+
+  "locale": "hu_HU.utf8"
+
+  "html_dir": "/home/user/Desktop/filminfo"
+
+  "url_path": "http://your.domain.com _OR_ /home/user/Downloads"
 }

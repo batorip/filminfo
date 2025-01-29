@@ -52,8 +52,8 @@ coverage.xml
 cover/
 
 # Translations
-*.mo
-*.pot
+#*.mo
+#*.pot
 
 # Django stuff:
 *.log
@@ -170,8 +170,7 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
-# videoinfo configuration and database files
+# filminfo
 filminfo.json
 filminfo.db
-sandbox/
-
+/TODO.docx
