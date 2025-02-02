@@ -57,9 +57,14 @@ def create_html_files(table_name, table_data, table_names_and_texts):
         shutil.copy("tmdb.svg", tmdb_svg_path)
 
     style_css_path = os.path.join(html_dir, "style.css")
-    if not os.path.exists(style_css_path):
+    if os.path.exists(style_css_path):
         os.remove(style_css_path)
     shutil.copy("style.css", style_css_path)
+
+    script_path = os.path.join(html_dir, "sort.js")
+    if os.path.exists(script_path):
+        os.remove(script_path)
+    shutil.copy("sort.js", script_path)
 
     li_items =[]
     for key, value in table_names_and_texts.items():
@@ -76,6 +81,7 @@ def create_html_files(table_name, table_data, table_names_and_texts):
         '<title>filminfo</title>',
         '<link rel="stylesheet" href="style.css" type="text/css">',
         '<link rel="stylesheet" href="custom.css" type="text/css">',
+        '<script src="sort.js"></script>',
         '</head>',
         '<body>',
         '<header>',
@@ -87,8 +93,14 @@ def create_html_files(table_name, table_data, table_names_and_texts):
     html_begin += [
         '</ul>',
         '</nav>',
-        '<article>',
-        '<table>' ]
+        '<article>']
+    if table_name == "Movie" or table_name == "TV":
+        html_begin += [
+        '<button id="sortButton" onclick="sortTableByDate()">'+_("Sort by download date")+'</button>',
+        '<span id="sortTextSort" hidden>'+_("Sort by download date")+'</span>',
+        '<span id="sortTextOriginal" hidden>'+_("Original order")+'</span>']
+    html_begin += [
+        '<table id="film_table">' ]
     html_end = [
         '</table>',
         '</article>',
@@ -107,8 +119,9 @@ def create_html_files(table_name, table_data, table_names_and_texts):
         for i in range(1, len(table_data["grid"][0]) + 1):
             html_file.write(f'<col class="col_{i}">\n')
         html_file.write('</colgroup>\n')
-
+        html_file.write('<tbody>\n')
         for film in table_data["film"]:
+            html_file.write(f'<tr><td colspan="{len(table_data["grid"][0])}" class="empty"></td></tr>\n')
             for grid_row, grid_line in enumerate(table_data["grid"]):
                 html_file.write(f'<tr class="tr_{grid_row+1}">\n')
                 for grid_col, grid_cell in enumerate(grid_line):
@@ -154,7 +167,7 @@ def create_html_files(table_name, table_data, table_names_and_texts):
                                             f'{start_of_anchor}{str(cell_value)} {str(cell_value_suffix)}{end_of_anchor}</div>\n')
                         html_file.write('</td>\n')
                 html_file.write('</tr>\n')
-            html_file.write(f'<tr><td colspan="{len(table_data["grid"][0])}" class="empty"></td></tr>\n')
+            # html_file.write(f'<tr><td colspan="{len(table_data["grid"][0])}" class="empty"></td></tr>\n')
 
 
     else:
@@ -162,6 +175,7 @@ def create_html_files(table_name, table_data, table_names_and_texts):
             html_file.write(f'<tr><td>{film["item"]}</td></tr>')
     for line in html_end:
         html_file.write(line + '\n')
+    html_file.write('</tbody>\n')
     html_file.close()
 
 def create_tables(movie_films, tv_films, unknown_items):
@@ -177,7 +191,8 @@ def create_tables(movie_films, tv_films, unknown_items):
                       ('poster_path', 'genres',         'overview', cast),
                       ('poster_path', 'vote_average',   'overview', cast),
                       ('poster_path', 'release_date',   'overview', cast),
-                      ('poster_path', 'runtime',        'overview', cast)
+                      ('poster_path', 'runtime',        'overview', cast),
+                      ('poster_path', 'download_date',  'overview', cast)
                   ),
                   "class": (
                       ('poster',      'title',          'overview', 'cast'),
@@ -185,10 +200,12 @@ def create_tables(movie_films, tv_films, unknown_items):
                       (None,          'genres',         None,       None),
                       (None,          'vote',           None,       None),
                       (None,          'date',           None,       None),
-                      (None,          'runtime',        None,       None)
+                      (None,          'runtime',        None,       None),
+                      (None,          'download_date',  None,       None)
                   ),
                   "separator": (
                       (None,          None,             None,       '<br>'),
+                      (None,          None,             None,       None),
                       (None,          None,             None,       None),
                       (None,          None,             None,       None),
                       (None,          None,             None,       None),
@@ -201,7 +218,8 @@ def create_tables(movie_films, tv_films, unknown_items):
                       (None,       _("Genres"),         None,       None),
                       (None,       _("Vote"),           None,       None),
                       (None,       _("Release date"),   None,       None),
-                      (None,       _("Runtime"),        None,       None)
+                      (None,       _("Runtime"),        None,       None),
+                      (None,       _("Download date"),  None,       None)
                   ),
                   "suffix": (
                       (None,          None,             None,       None),
@@ -209,11 +227,13 @@ def create_tables(movie_films, tv_films, unknown_items):
                       (None,          None,             None,       None),
                       (None,          None,             None,       None),
                       (None,          None,             None,       None),
-                      (None,          _("minutes"),     None,       None)
+                      (None,          _("minutes"),     None,       None),
+                      (None,          None,             None,       None)
                   ),
 
                   "specialty": (
                       ("IMG",         "URL",            None,       None),
+                      (None,          None,             None,       None),
                       (None,          None,             None,       None),
                       (None,          None,             None,       None),
                       (None,          None,             None,       None),
@@ -231,7 +251,8 @@ def create_tables(movie_films, tv_films, unknown_items):
                       ('poster_path', 'genres',         'overview', cast),
                       ('poster_path', 'vote_average',   'overview', cast),
                       ('poster_path',  air_dates,       'overview', cast),
-                      ('poster_path',  seasons_episodes,'overview', cast)
+                      ('poster_path',  seasons_episodes,'overview', cast),
+                      ('poster_path', 'download_date',  'overview', cast)
                   ),
                   "class": (
                       ('poster',      'name',          'overview', 'cast'),
@@ -239,7 +260,8 @@ def create_tables(movie_films, tv_films, unknown_items):
                       (None,          'genres',         None,       None),
                       (None,          'vote',           None,       None),
                       (None,          'date',           None,       None),
-                      (None,          'seasons_episodes',None,      None)
+                      (None,          'seasons_episodes',None,      None),
+                      (None,          'download_date',  None,       None)
                   ),
                   "separator": (
                       (None,          None,             None,       '<br>'),
@@ -247,7 +269,8 @@ def create_tables(movie_films, tv_films, unknown_items):
                       (None,          None,             None,       None),
                       (None,          None,             None,       None),
                       (None,          ' - ',            None,       None),
-                      (None,          '/',              None,       None)
+                      (None,          '/',              None,       None),
+                      (None,          None,             None,       None)
                   ),
                   "cell_title": (
                       (None,       _("Name"),      _("Overview"), _("Cast")),
@@ -255,9 +278,11 @@ def create_tables(movie_films, tv_films, unknown_items):
                       (None,       _("Genres"),         None,       None),
                       (None,       _("Vote"),           None,       None),
                       (None,       _("Air dates"),      None,       None),
-                      (None,       _("Seasons/Episodes"),None,      None)
+                      (None,       _("Seasons/Episodes"),None,      None),
+                      (None,       _("Download date"),  None,       None)
                   ),
                   "suffix": (
+                      (None,          None,             None,       None),
                       (None,          None,             None,       None),
                       (None,          None,             None,       None),
                       (None,          None,             None,       None),
@@ -268,6 +293,7 @@ def create_tables(movie_films, tv_films, unknown_items):
 
                   "specialty": (
                       ("IMG",         "URL",            None,       None),
+                      (None,          None,             None,       None),
                       (None,          None,             None,       None),
                       (None,          None,             None,       None),
                       (None,          None,             None,       None),
@@ -297,7 +323,7 @@ def create_tables(movie_films, tv_films, unknown_items):
 
     for name in table_data.keys():
         for film in table_data[name]["film"]:
-            if film["poster_path"]:
+            if film.get("poster_path") is not None:
                 req_files.add(film["poster_path"].lstrip("/"))
     to_delete = all_files - req_files
     for filename in to_delete:

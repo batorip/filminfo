@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
-"Report-Msgid-Bugs-To: Batori Peter <batori.peter@gmail.com>\n"
-"POT-Creation-Date: 2025-01-29 13:33+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-02-02 14:11+0100\n"
 "PO-Revision-Date: 2025-01-29 13:33+0100\n"
 "Last-Translator: Batori Peter<batori.peter@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,70 +24,82 @@ msgstr "kép letöltése sikerült."
 msgid "image download failed."
 msgstr "kép letöltése nem sikerült!"
 
-#: filminfo_html.py:122
+#: filminfo_html.py:97 filminfo_html.py:98
+msgid "Sort by download date"
+msgstr "Rendezés a letöltés dátuma szerint"
+
+#: filminfo_html.py:99
+msgid "Original order"
+msgstr "Eredeti sorrend"
+
+#: filminfo_html.py:132
 msgid "ERROR"
 msgstr "HIBA"
 
-#: filminfo_html.py:173
+#: filminfo_html.py:184
 msgid "Movie"
 msgstr "Mozi"
 
-#: filminfo_html.py:199
+#: filminfo_html.py:213
 msgid "Title"
 msgstr "Cím"
 
-#: filminfo_html.py:199 filminfo_html.py:253
+#: filminfo_html.py:213 filminfo_html.py:273
 msgid "Overview"
 msgstr "Tartalom"
 
-#: filminfo_html.py:199 filminfo_html.py:253
+#: filminfo_html.py:213 filminfo_html.py:273
 msgid "Cast"
 msgstr "Szereposztás"
 
-#: filminfo_html.py:200
+#: filminfo_html.py:214
 msgid "Original title"
-msgstr "Eredeeti cím"
+msgstr "Eredeti cím"
 
-#: filminfo_html.py:201 filminfo_html.py:255
+#: filminfo_html.py:215 filminfo_html.py:275
 msgid "Genres"
 msgstr "Műfajok"
 
-#: filminfo_html.py:202 filminfo_html.py:256
+#: filminfo_html.py:216 filminfo_html.py:276
 msgid "Vote"
 msgstr "Szavazás"
 
-#: filminfo_html.py:203
+#: filminfo_html.py:217
 msgid "Release date"
 msgstr "Megjelenés dátuma"
 
-#: filminfo_html.py:204
+#: filminfo_html.py:218
 msgid "Runtime"
 msgstr "Hossz"
 
-#: filminfo_html.py:212
+#: filminfo_html.py:219 filminfo_html.py:279
+msgid "Download date"
+msgstr "Letöltés dátuma"
+
+#: filminfo_html.py:227
 msgid "minutes"
 msgstr "perc"
 
-#: filminfo_html.py:226
+#: filminfo_html.py:243
 msgid "TV"
 msgstr "TV"
 
-#: filminfo_html.py:253
+#: filminfo_html.py:273
 msgid "Name"
 msgstr "Cím"
 
-#: filminfo_html.py:254
+#: filminfo_html.py:274
 msgid "Original name"
 msgstr "Eredeti cím"
 
-#: filminfo_html.py:257
+#: filminfo_html.py:277
 msgid "Air dates"
 msgstr "Eredeti vetítési idő"
 
-#: filminfo_html.py:258
+#: filminfo_html.py:278
 msgid "Seasons/Episodes"
 msgstr "Évadok/Epizódok"
 
-#: filminfo_html.py:280
+#: filminfo_html.py:303
 msgid "Unknown"
 msgstr "Ismeretlen"

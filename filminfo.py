@@ -1,5 +1,6 @@
 import os
 import re
+
 import tmdbsimple as tmdb
 import sqlite3
 import datetime
@@ -64,16 +65,19 @@ def get_movie_details(db, directory, item, lang):
     if values:
         del values['id']
     else:
+        download_date = datetime.datetime.fromtimestamp(os.path.getmtime(os.path.join(directory, item))).strftime("%Y-%m-%d %H:%M:%S")
         values = {"item": item,
                   "search_title": search_title,
                   "search_year": search_year,
-                  "query_date": datetime.datetime.now().strftime("%x")}
+                  "query_date": datetime.datetime.now().strftime("%x"),
+                  "download_date": download_date}
 
         details = None
         movie_id = None
         search = tmdb.Search()
         response = search.movie(query=search_title, year=search_year, language=lang) if search_year else search.movie(query=search_title, language=lang)
         if response['results']:
+
             movie_id = response['results'][0]['id']
             details = tmdb.Movies(movie_id).info(language=lang)
         elif lang != 'en':
@@ -98,11 +102,11 @@ def get_movie_details(db, directory, item, lang):
                 else:
                     values[f'cast_{i + 1}'] = ''
 
-            sql = '''INSERT INTO movie(item, search_title, search_year, movie_id, query_date, title, original_title, overview, release_date, runtime, vote_average, genres, poster_path, cast_1, cast_2, cast_3, cast_4, cast_5)
-                     VALUES(:item, :search_title, :search_year, :movie_id, :query_date, :title, :original_title, :overview, :release_date, :runtime, :vote_average, :genres, :poster_path, :cast_1, :cast_2, :cast_3, :cast_4, :cast_5)'''
+            sql = '''INSERT INTO movie(item, search_title, search_year, movie_id, query_date, download_date, title, original_title, overview, release_date, runtime, vote_average, genres, poster_path, cast_1, cast_2, cast_3, cast_4, cast_5)
+                     VALUES(:item, :search_title, :search_year, :movie_id, :query_date, :download_date, :title, :original_title, :overview, :release_date, :runtime, :vote_average, :genres, :poster_path, :cast_1, :cast_2, :cast_3, :cast_4, :cast_5)'''
         else:
-            sql = '''INSERT INTO movie(item, search_title, search_year, query_date)
-                     VALUES(:item, :search_title, :search_year, :query_date)'''
+            sql = '''INSERT INTO movie(item, search_title, search_year, query_date, download_date)
+                     VALUES(:item, :search_title, :search_year, :query_date, :download_date)'''
         cursor.execute(sql, values)
         db.commit()
     return values
@@ -116,9 +120,11 @@ def get_tv_details(db, directory, item, lang):
     if values:
         del values['id']
     else:
+        download_date = datetime.datetime.fromtimestamp(os.path.getmtime(os.path.join(directory, item))).strftime("%Y-%m-%d %H:%M:%S")
         values = {"item": item,
                   "search_title": search_title,
-                  "query_date": datetime.datetime.now().strftime("%x")}
+                  "query_date": datetime.datetime.now().strftime("%x"),
+                  "download_date": download_date}
 
         details = None
         tv_id = None
@@ -149,11 +155,11 @@ def get_tv_details(db, directory, item, lang):
                 else:
                     values[f'cast_{i + 1}'] = ''
 
-            sql = '''INSERT INTO tv(item, search_title, tv_id, query_date, name, original_name, overview, first_air_date, last_air_date, number_of_episodes, number_of_seasons, vote_average, genres, poster_path, cast_1, cast_2, cast_3, cast_4, cast_5)
-                     VALUES(:item, :search_title, :tv_id, :query_date, :name, :original_name, :overview, :first_air_date, :last_air_date, :number_of_episodes, :number_of_seasons, :vote_average, :genres, :poster_path, :cast_1, :cast_2, :cast_3, :cast_4, :cast_5)'''
+            sql = '''INSERT INTO tv(item, search_title, tv_id, query_date, download_date, name, original_name, overview, first_air_date, last_air_date, number_of_episodes, number_of_seasons, vote_average, genres, poster_path, cast_1, cast_2, cast_3, cast_4, cast_5)
+                     VALUES(:item, :search_title, :tv_id, :query_date, :download_date, :name, :original_name, :overview, :first_air_date, :last_air_date, :number_of_episodes, :number_of_seasons, :vote_average, :genres, :poster_path, :cast_1, :cast_2, :cast_3, :cast_4, :cast_5)'''
         else:
-            sql = '''INSERT INTO tv(item, search_title, query_date)
-                     VALUES(:item, :search_title, :query_date)'''
+            sql = '''INSERT INTO tv(item, search_title, query_date, download_date)
+                     VALUES(:item, :search_title, :query_date, :download_date)'''
         cursor.execute(sql, values)
         db.commit()
     return values
@@ -168,6 +174,7 @@ def create_sqlite_db():
                     search_title TEXT NOT NULL,
                     search_year TEXT,
                     query_date TEXT NOT NULL,
+                    download_date TEXT NOT NULL,
                     movie_id INTEGER,
                     title TEXT,
                     original_title TEXT,
@@ -189,6 +196,7 @@ def create_sqlite_db():
                     item TEXT NOT NULL,
                     search_title TEXT NOT NULL,
                     query_date TEXT NOT NULL,
+                    download_date TEXT NOT NULL,
                     tv_id INTEGER,
                     name TEXT,
                     original_name TEXT,

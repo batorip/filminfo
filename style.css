@@ -90,6 +90,7 @@ footer {
 table {
   border: 0;
   border-collapse: collapse;
+  table-layout: fixed;
 }
 
 tr {
@@ -130,7 +131,7 @@ td.empty {
 }
 
 .poster_img {
-  width: 200px;
+  width: 250px;
 }
 
 .title, .name {
@@ -145,4 +146,25 @@ td.empty {
 a.film_link {
   text-decoration: none;
   color: #412d26;
+}
+
+button#sortButton {
+  /*background-color: #5d4037;*/
+  background-color: #e0d6c1
+  border: none;
+  border-radius: 5px;
+  color: #8d6e63;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+button#sortButton:hover {
+  background-color: #8d6e63;
+  color: #e0d6c1;
 }
